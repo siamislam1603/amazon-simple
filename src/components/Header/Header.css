@@ -1,21 +1,13 @@
 .header img{
     height: 80px;
+    display: inherit;
+    margin: 4px auto;
 }
-.header{
-    text-align: center;
-}
-.header nav{
-    background-color: black;
-    display: flex;
-    justify-content: start;
-    padding: 5px 0 5px 40px;
-}
-.header nav a{
-    text-decoration: none;
+.nav-link{
     color: white;
-    padding: 2px 15px;
     font-size: 18px;
 }
-.header nav a:hover{
+.nav-link:hover{
     background-color:gray ;
+    color: white;
 }
