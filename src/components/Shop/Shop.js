@@ -9,8 +9,11 @@ const Shop = () => {
         const num=Math.floor(Math.random() * (productsJson.length+1-10)); 
         setProducts(productsJson.slice(num,num+10));
     },[]);
+    const [orders,setOrders]=useState([]);
+    // We should define the call handler function, where the useState is used
     const addToCartHandler=(product)=>{
         console.log(product);
+        setOrders([...orders,product]);
     }
     return (
         <div className="container">
@@ -21,7 +24,7 @@ const Shop = () => {
                     )}
                 </div>
                 <div className="col-md-2 orders-container pt-3">
-                    <Order></Order>
+                    <Order items={orders.length}></Order>
                 </div>
             </div>
         </div>

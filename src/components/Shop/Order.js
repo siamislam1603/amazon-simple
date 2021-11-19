@@ -1,10 +1,10 @@
 import React from "react";
 
-const Order = () => {
+const Order = (props) => {
   return (
     <div>
       <h5 className="text-center">Order Summary</h5>
-      <h6 className="text-center">Items Ordered: {}</h6>
+      <h6 className="text-center">Items Ordered: {props.items}</h6>
       <div className="d-flex justify-content-between">
         <small>Items</small>
         <small>${}</small>
