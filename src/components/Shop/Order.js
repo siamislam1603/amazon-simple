@@ -1,28 +1,41 @@
 import React from "react";
 
 const Order = (props) => {
+  const items=props.items;
+  //Here .reduce will reduce the item 1 by 1 & update initial toal value of 0 to total + product.price
+  const productsPrice=+items.reduce((total,product)=>total+product.price,0).toFixed(2);
+  let shipping=0;
+  if(productsPrice>35)
+    shipping=0;
+  else if(productsPrice>15)
+    shipping=4.99;
+  else if(productsPrice>0)
+    shipping=12.99;
+  const tax=Number((productsPrice/10).toFixed(2));
+  const totalBeforeTax=(productsPrice+shipping).toFixed(2);
+  const totalPrice=(productsPrice+shipping+tax).toFixed(2);
   return (
     <div>
       <h5 className="text-center">Order Summary</h5>
-      <h6 className="text-center">Items Ordered: {props.items}</h6>
+      <h6 className="text-center">Items Ordered: {items.length}</h6>
       <div className="d-flex justify-content-between">
         <small>Items</small>
-        <small>${}</small>
+        <small>${productsPrice}</small>
       </div>
       <div className="d-flex justify-content-between">
         <small>Shipping & Handling:</small>
-        <small>${}</small>
+        <small>${shipping}</small>
       </div>
       <div className="d-flex justify-content-between">
-        <small>Total before tax:</small>$<small></small>
+        <small>Total before tax:</small><small>${totalBeforeTax}</small>
       </div>
       <div className="d-flex justify-content-between">
-        <small>Estimated Tax</small>
-        <small>${}</small>
+        <small>Estimated Tax:</small>
+        <small>${tax}</small>
       </div>
       <div className="d-flex justify-content-between">
         <h5 className="text-danger">Order Total:</h5>
-        <h5 className="text-danger">${}</h5>
+        <h5 className="text-danger">${totalPrice}</h5>
       </div>
       <button className="btn btn-warning">Review your order</button>
     </div>

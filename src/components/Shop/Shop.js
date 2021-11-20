@@ -18,13 +18,13 @@ const Shop = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-md-10 pt-3">
+                <div className="col-md-9 pt-3">
                     {products.map(product=>
                         <Product product={product} addToCartHandler={addToCartHandler}></Product>
                     )}
                 </div>
-                <div className="col-md-2 orders-container pt-3">
-                    <Order items={orders.length}></Order>
+                <div className="col-md-3 orders-container pt-3">
+                    <Order items={orders}></Order>
                 </div>
             </div>
         </div>
