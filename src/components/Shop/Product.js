@@ -1,13 +1,13 @@
 import React from 'react';
 
 const Product = (props) => {
-    const showStars=(star)=>{
+    const showStars=(star,key)=>{
         let stars=[];
-        for (let i = 0; i < star; i++) {
-            stars.push(<i className="bi bi-star-fill"></i>) ;     
+        for (let i = 1; i <= star; i++) {
+            stars.push(<i className="bi bi-star-fill" key={key+'_'+i}></i>) ;     
         }
-        for(let i=0;i<5-star;i++){
-            stars.push(<i className="bi bi-star"></i>);
+        for(let i=1;i<=5-star;i++){
+            stars.push(<i className="bi bi-star" key={key+'_'+(star+i)}></i>);
         }
         return <div className='mb-2'>{stars}</div>;
     };
@@ -31,7 +31,7 @@ const Product = (props) => {
                         </div>
                         <div>
                             {
-                                showStars(props.product.star)
+                                showStars(props.product.star,props.product.key)
                             }
                             <strong>Features</strong>
                         </div>
