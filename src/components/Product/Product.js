@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
+import './Product.css';
 const Product = (props) => {
     const showStars=(star,key)=>{
         let stars=[];
@@ -17,7 +18,7 @@ const Product = (props) => {
                 <img src={props.product.img} alt="" className='product-img'/>
             </div>
             <div className="col-md-8 mt-2">
-                    <h5 className="text-primary">{props.product.name}</h5>
+                    <NavLink className="text-primary d-block mb-2" to={"/product/"+props.product.key}>{props.product.name}</NavLink>
                     by: {props.product.seller}
                     <div className="d-flex justify-content-between mt-3">
                         <div>

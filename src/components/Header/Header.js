@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../images/logo.png';
 import './Header.css';
+import { NavLink } from 'react-router-dom';
 const Header = () => {
     return (
         <div className="header">
@@ -12,9 +13,9 @@ const Header = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <a className="nav-link" href="/shop">Shop</a>
-                        <a className="nav-link" href="/review">Order Review</a>
-                        <a className="nav-link" href="/manage">Manage Inventory Here</a>
+                        <NavLink className="nav-link" to="/shop">Shop</NavLink>
+                        <NavLink className="nav-link" to="/review">Order Review</NavLink>
+                        <NavLink className="nav-link" to="/inventory">Manage Inventory Here</NavLink>
                     </div>
                     </div>
                 </div>

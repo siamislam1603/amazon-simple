@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import productsJson from '../../fakeData/products.json';
-import Order from './Order';
-import Product from './Product';
+import Order from '../Order/Order';
+import Product from '../Product/Product';
 import './Shop.css';
 const Shop = () => {
     const [products,setProducts]=useState([]);
@@ -16,15 +16,15 @@ const Shop = () => {
         setOrders([...orders,product]);
     }
     return (
-        <div className="container">
+        <div className="container mb-3">
             <div className="row">
-                <div className="col-md-9 pt-3">
+                <div className="col-md-9 pt-3 products-container">
                     {products.map(product=>
                         <Product product={product} addToCartHandler={addToCartHandler} key={product.key}>
                         </Product>
                     )}
                 </div>
-                <div className="col-md-3 orders-container pt-3">
+                <div className="col-md-3 pt-3">
                     <Order items={orders}></Order>
                 </div>
             </div>
