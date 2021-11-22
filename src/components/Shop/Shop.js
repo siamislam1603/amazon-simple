@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import productsJson from '../../fakeData/products.json';
+import { addToDb } from '../../utilities/fakedb';
 import Order from '../Order/Order';
 import Product from '../Product/Product';
 import './Shop.css';
@@ -12,8 +13,8 @@ const Shop = () => {
     const [orders,setOrders]=useState([]);
     // We should define the call handler function, where the useState is used
     const addToCartHandler=(product)=>{
-        console.log(product);
         setOrders([...orders,product]);
+        addToDb(product.key);
     }
     return (
         <div className="container mb-3">

@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Order = (props) => {
   const items=props.items;
@@ -15,7 +16,7 @@ const Order = (props) => {
   const totalBeforeTax=(productsPrice+shipping).toFixed(2);
   const totalPrice=(productsPrice+shipping+tax).toFixed(2);
   return (
-    <div>
+    <div className="pt-4">
       <h5 className="text-center">Order Summary</h5>
       <h6 className="text-center">Items Ordered: {items.length}</h6>
       <div className="d-flex justify-content-between">
@@ -37,7 +38,7 @@ const Order = (props) => {
         <h5 className="text-danger">Order Total:</h5>
         <h5 className="text-danger">${totalPrice}</h5>
       </div>
-      <button className="btn btn-warning">Review your order</button>
+      <NavLink className="btn btn-warning" to="/review">Review your order</NavLink>
     </div>
   );
 };

@@ -13,7 +13,7 @@ const Product = (props) => {
         return <div className='mb-2'>{stars}</div>;
     };
     return (
-        <div className="row product-section pt-2">
+        <div className="row product-section pt-4">
             <div className="text-center col-md-4 d-md-flex align-items-md-center">
                 <img src={props.product.img} alt="" className='product-img'/>
             </div>
