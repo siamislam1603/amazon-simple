@@ -13,11 +13,11 @@ const Product = (props) => {
         return <div className='mb-2'>{stars}</div>;
     };
     return (
-        <div className="row product-section">
+        <div className="row product-section pt-2">
             <div className="text-center col-md-4 d-md-flex align-items-md-center">
                 <img src={props.product.img} alt="" className='product-img'/>
             </div>
-            <div className="col-md-8 mt-2">
+            <div className="col-md-8">
                     <NavLink className="text-primary d-block mb-2" to={"/product/"+props.product.key}>{props.product.name}</NavLink>
                     by: {props.product.seller}
                     <div className="d-flex justify-content-between mt-3">
@@ -26,9 +26,12 @@ const Product = (props) => {
                             only {props.product.stock} left in stock - order soon
                             {// As we need to pass all the properties back to the Shop.js cartHandler function's parameter, we can't directly call props.addToCartHandler(props). Because this will call the function without clicking the button. That's why we must call it through an anonymous function if we need to send parameters to the handler function.
                             }
-                            <button className="btn btn-warning d-block my-2" onClick={()=>props.addToCartHandler(props.product)}>
+                            {
+                                props.showAddToCart && <button className="btn btn-warning d-block my-2" onClick={()=>props.addToCartHandler(props.product)}>
                                 <i className="bi bi-cart-fill"></i> add to cart
-                            </button>
+                                </button>
+                            }
+                            
                         </div>
                         <div>
                             {
