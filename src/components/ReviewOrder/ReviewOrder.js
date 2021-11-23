@@ -37,8 +37,8 @@ const ReviewOrder = () => {
                     {orderPlaced && <img src={placeOrderImg} alt="" className='img-fluid'/>}
                 </div>
                 <div className="col-md-3">
-                    <Order items={cartItems}>                    
-                        <button className="btn btn-warning" onClick={handlePlaceOrder}>Place order</button>
+                    <Order items={cartItems}>
+                        {cartItems.length>0 && <button className="btn btn-warning" onClick={handlePlaceOrder}>Place order</button>}
                     </Order>
                 </div>
             </div>
