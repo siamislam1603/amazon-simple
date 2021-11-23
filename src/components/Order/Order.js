@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
 const Order = (props) => {
   const items=props.items;
@@ -39,7 +38,9 @@ const Order = (props) => {
         <h5 className="text-danger">Order Total:</h5>
         <h5 className="text-danger">${totalPrice}</h5>
       </div>
-      <NavLink className="btn btn-warning" to="/review">Review your order</NavLink>
+      {
+        props.children
+      }
     </div>
   );
 };

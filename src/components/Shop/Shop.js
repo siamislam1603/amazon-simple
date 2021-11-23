@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import productsJson from '../../fakeData/products.json';
 import { addToDb,getStoredCart } from '../../utilities/fakedb';
 import Order from '../Order/Order';
@@ -11,15 +12,13 @@ const Shop = () => {
         const num=Math.floor(Math.random() * (productsJson.length+1-10)); 
         setProducts(productsJson.slice(num,num+10));
         const savedCart=getStoredCart();
-        if(orders.length===0 && savedCart.length!==0){
-            const productKeys=Object.keys(savedCart);
-            const cart=productKeys.map(pdKey=>{
-                const product=productsJson.find(pd=>pd.key===pdKey);
-                product.quantity=savedCart[pdKey];
-                return product;
-            });
-            setOrders(cart);
-        }
+        const productKeys=Object.keys(savedCart);
+        const cart=productKeys.map(pdKey=>{
+            const product=productsJson.find(pd=>pd.key===pdKey);
+            product.quantity=savedCart[pdKey];
+            return product;
+        });
+        setOrders(cart);
     },[]);
     // We should define the call handler function, where the useState is used
     const addToCartHandler=(product)=>{
@@ -47,7 +46,9 @@ const Shop = () => {
                     )}
                 </div>
                 <div className="col-md-3 pt-3">
-                    <Order items={orders}></Order>
+                    <Order items={orders}>           
+                        <NavLink className="btn btn-warning" to="/review">Review your order</NavLink>
+                    </Order>
                 </div>
             </div>
         </div>
