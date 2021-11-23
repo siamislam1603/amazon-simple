@@ -4,7 +4,8 @@ import { NavLink } from "react-router-dom";
 const Order = (props) => {
   const items=props.items;
   //Here .reduce will reduce the item 1 by 1 & update initial toal value of 0 to total + product.price
-  const productsPrice=+items.reduce((total,product)=>total+product.price,0).toFixed(2);
+  const productsPrice=+items.reduce((total,product)=>total+(product.price*product.quantity),0).toFixed(2);
+  const itemsOrdered=items.reduce((total,product)=>total+product.quantity,0);
   let shipping=0;
   if(productsPrice>35)
     shipping=0;
@@ -18,7 +19,7 @@ const Order = (props) => {
   return (
     <div className="pt-4">
       <h5 className="text-center">Order Summary</h5>
-      <h6 className="text-center">Items Ordered: {items.length}</h6>
+      <h6 className="text-center">Items Ordered: {itemsOrdered}</h6>
       <div className="d-flex justify-content-between">
         <small>Items</small>
         <small>${productsPrice}</small>

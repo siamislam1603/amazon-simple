@@ -1,19 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import productsJson from '../../fakeData/products.json';
-import { addToDb } from '../../utilities/fakedb';
+import { addToDb,getStoredCart } from '../../utilities/fakedb';
 import Order from '../Order/Order';
 import Product from '../Product/Product';
 import './Shop.css';
 const Shop = () => {
     const [products,setProducts]=useState([]);
+    const [orders,setOrders]=useState([]);
     useEffect(()=>{
         const num=Math.floor(Math.random() * (productsJson.length+1-10)); 
         setProducts(productsJson.slice(num,num+10));
+        const savedCart=getStoredCart();
+        if(orders.length===0 && savedCart.length!==0){
+            const productKeys=Object.keys(savedCart);
+            const cart=productKeys.map(pdKey=>{
+                const product=productsJson.find(pd=>pd.key===pdKey);
+                product.quantity=savedCart[pdKey];
+                return product;
+            });
+            setOrders(cart);
+        }
     },[]);
-    const [orders,setOrders]=useState([]);
     // We should define the call handler function, where the useState is used
     const addToCartHandler=(product)=>{
-        setOrders([...orders,product]);
+        const foundProduct=orders.find(pd=>pd.key===product.key);
+        let newCart;
+        if(foundProduct){
+            product.quantity+=1;
+            const others=orders.filter(pd=>pd.key!==product.key);
+            newCart=[...others,product];
+        }
+        else{
+            product.quantity=1;
+            newCart=[...orders,product];
+        }
+        setOrders(newCart);
         addToDb(product.key);
     }
     return (
