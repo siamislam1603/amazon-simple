@@ -6,6 +6,7 @@ import Inventory from './components/Inventory/Inventory';
 import ReviewOrder from './components/ReviewOrder/ReviewOrder';
 import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
+import Authentication from './components/Authentication/Authentication';
 function App() {
   return (
     <div>
@@ -18,6 +19,7 @@ function App() {
             <Route path="/review" element={<ReviewOrder />} />
             <Route path="*" element={<NotFound/>}/>
             <Route path="/product/:productId" element={<ProductDetail/>}/>
+            <Route path="/login" element={<Authentication/>}/>
         </Routes>
       </BrowserRouter>
     </div>
