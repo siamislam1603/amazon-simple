@@ -1,45 +1,33 @@
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 import React, { useState } from "react";
-const SignIn = (props) => {
+import Alerts from "../Alerts/Alerts";
+import { handleEmailSubmission } from "./handleEmailSubmission";
+import { inputValidation } from "./inputValidation";
+const SignIn = () => {
+  const auth = getAuth();
   const [validation,setValidation]=useState({email:'', password:'', emailFeedback:'', passwordFeedback:'', emailValue:'', passwordValue:''});
-  const setValidations=(type,isValid,value)=>{
-    const newValidation={...validation};
-    newValidation[type+'Value']=value;
-    if(!isValid){
-      newValidation[type]=' is-invalid';
-      newValidation[type+'Feedback']=' d-block';
-    }
-    else if(isValid==='default'){
-      newValidation[type]='';
-      newValidation[type+'Feedback']='';
-    }
-    else{
-      newValidation[type]=' is-valid';
-      newValidation[type+'Feedback']='';
-    }
-    setValidation(newValidation);
-  }
+  const [userEmailInfo, setUserEmailInfo] = useState({
+    type: "",
+    msg: "",
+    email: ""
+  });
   const [isLogin,setIslogin]=useState(true);
+  const [showOnSubmitMsg,setShowOnSubmitMsg]=useState(false);
   const handleInputChange = (event) => {
-    const e = event.target;
-    let isValid;
-    if (e.type === "email") {
-      const re =/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      isValid = re.test(String(e.value).toLowerCase());
-    }
-    else
-      isValid=e.value.length >= 8;
-    if(e.value.length===0)
-      isValid='default';
-    setValidations(e.type,isValid,e.value);
+    inputValidation([event,validation,setValidation]);
   };
   const handleSubmit = (e) => {
-    if(validation.email===' is-valid' && validation.password===' is-valid'){
-        props.handleEmailSubmit({email:validation.emailValue,password:validation.passwordValue,submitTypeLogin:isLogin});
-    }
     e.preventDefault();
-  };
+    if(validation.email===' is-valid' && validation.password===' is-valid'){
+        if (isLogin)
+          handleEmailSubmission([validation.emailValue, validation.passwordValue, signInWithEmailAndPassword,userEmailInfo,setUserEmailInfo,auth,isLogin,setShowOnSubmitMsg]);
+        else
+          handleEmailSubmission([validation.emailValue, validation.passwordValue, createUserWithEmailAndPassword,userEmailInfo,setUserEmailInfo,auth,isLogin,setShowOnSubmitMsg]);
+    }
+  }
   return (
       <form onSubmit={handleSubmit}>
+        {showOnSubmitMsg && <Alerts alert={[userEmailInfo.type,userEmailInfo.msg,userEmailInfo.email,setShowOnSubmitMsg]} />}
         <h1 className="text-center">{isLogin? 'Sign In' : 'Sign Up'}</h1>
         <div className="mt-5">
           <div id="email-form" className="mb-4">

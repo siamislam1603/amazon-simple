@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthenticationContext } from '../Authentication/Authentication';
 import './Alerts.css';
 const Alerts = (props) => {
     const [alertDismiss,setAlertDismiss]=useState('');
-    const {type,msg}=props.alert;
+    const [type,msg,email,setShowOnSubmitMsg]=props.alert;
+    console.log('Alert:',type,msg,props);
+    const [setUser]=useContext(AuthenticationContext);
     useEffect(()=>{
         setAlertDismiss('');
         setTimeout(()=>{
             setAlertDismiss(' d-none');
+            setShowOnSubmitMsg(false);
+            if(type==='success' && msg==='Logged in successfully.'){
+                setUser({isLoggedIn: true,
+                  name: "",
+                  email: email,
+                  photo: ""});
+              }
         },3000);
-    },[msg]);
+    },[setShowOnSubmitMsg, type, msg,email,setUser]);
     return (
         <div className={`style-alert my-3${alertDismiss}`}>
             <div className={`alert alert-${type} mb-0`} role="alert">
