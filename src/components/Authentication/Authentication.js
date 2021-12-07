@@ -5,13 +5,14 @@ import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signOut
 } from "firebase/auth";
 import SignIn from "./SignIn";
 import "./Authentication.css";
 const app = initializeApp(firebaseConfig);
 export const AuthenticationContext = createContext();
-
+const facebookProvider = new FacebookAuthProvider();
 const Authentication = () => {
   const [user, setUser] = useState({
     isLoggedIn: false,
@@ -19,19 +20,34 @@ const Authentication = () => {
     email: "",
     photo: ""
   });
-  const provider = new GoogleAuthProvider();
+  const setUserInfo=(userProfile)=>{
+    setUser({
+      isLoggedIn: true,
+      name: userProfile.displayName,
+      email: userProfile.email,
+      photo: userProfile.photoURL,
+    });
+  }
+  const googleProvider = new GoogleAuthProvider();
   const auth = getAuth();
-  const handleLoginClick = () => {
-    signInWithPopup(auth, provider)
+  const handleFacebookSignUpClick=()=>{
+    signInWithPopup(auth, facebookProvider)
+    .then((result) => {
+      const user = result.user;
+      console.log(user);
+      setUserInfo(user);
+    })
+    .catch((error) => {
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    });
+  }
+  const handleGoogleSignUpClick = () => {
+    signInWithPopup(auth, googleProvider)
       .then((result) => {
         console.log(result);
         const userProfile = result.user;
-        setUser({
-          isLoggedIn: true,
-          name: userProfile.displayName,
-          email: userProfile.email,
-          photo: userProfile.photoURL,
-        });
+        setUserInfo(userProfile);
       })
       .catch((error) => {
         console.log(error);
@@ -67,8 +83,11 @@ const Authentication = () => {
                 style={{ borderBottom: "1px dotted silver" }}
                 className="my-3"
               ></div>
-              <div className="d-flex justify-content-center" onClick={handleLoginClick}>
-                <i className="bi bi-google btn btn-danger"></i>
+              <div className="d-flex justify-content-center">
+                <div>
+                  <i className="bi bi-google btn btn-danger" onClick={handleGoogleSignUpClick}></i>
+                  <i className="bi bi-facebook btn btn-primary" onClick={handleFacebookSignUpClick} style={{marginLeft:'10px'}}></i>
+                </div>
               </div>
             </div>
           ) : (
