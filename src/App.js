@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import Header from './components/Header/Header';
 import Shop from './components/Shop/Shop';
 import {Routes, Route,BrowserRouter} from 'react-router-dom';
@@ -7,9 +7,17 @@ import ReviewOrder from './components/ReviewOrder/ReviewOrder';
 import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import Authentication from './components/Authentication/Authentication';
+import Shipment from './components/Shipment/Shipment';
+export const LoginContext=createContext();
 function App() {
+  const [user, setUser] = useState({
+    isLoggedIn: false,
+    name: "",
+    email: "",
+    photo: ""
+  });
   return (
-    <div>
+    <LoginContext.Provider value={[user,setUser]}>
       <BrowserRouter>
         <Header></Header>
         <Routes>
@@ -20,9 +28,10 @@ function App() {
             <Route path="*" element={<NotFound/>}/>
             <Route path="/product/:productId" element={<ProductDetail/>}/>
             <Route path="/login" element={<Authentication/>}/>
+            <Route path="/shipment" element={<Shipment/>}/>
         </Routes>
       </BrowserRouter>
-    </div>
+    </LoginContext.Provider>
   );
 }
 

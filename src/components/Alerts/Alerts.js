@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthenticationContext } from '../Authentication/Authentication';
+import { LoginContext } from '../../App';
 import './Alerts.css';
 const Alerts = (props) => {
     const [alertDismiss,setAlertDismiss]=useState('');
     const [type,msg,email,setShowOnSubmitMsg]=props.alert;
     console.log('Alert:',type,msg,props);
-    const [setUser]=useContext(AuthenticationContext);
+    const [,setUser]=useContext(LoginContext);
     useEffect(()=>{
         setAlertDismiss('');
         setTimeout(()=>{

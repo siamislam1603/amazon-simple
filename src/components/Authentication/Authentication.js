@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { useContext } from "react";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "../../firebase.config";
 import {
@@ -10,16 +10,11 @@ import {
 } from "firebase/auth";
 import SignIn from "./SignIn";
 import "./Authentication.css";
+import { LoginContext } from "../../App";
 const app = initializeApp(firebaseConfig);
-export const AuthenticationContext = createContext();
 const facebookProvider = new FacebookAuthProvider();
 const Authentication = () => {
-  const [user, setUser] = useState({
-    isLoggedIn: false,
-    name: "",
-    email: "",
-    photo: ""
-  });
+  const [user, setUser] = useContext(LoginContext);
   const setUserInfo=(userProfile)=>{
     setUser({
       isLoggedIn: true,
@@ -72,7 +67,7 @@ const Authentication = () => {
     margin: "0px auto"
   };
   return (
-    <AuthenticationContext.Provider value={[setUser]}>
+    <div>
       <div className="container">
         <div className="w-50 mx-auto">
           {!user.isLoggedIn ? (
@@ -113,7 +108,7 @@ const Authentication = () => {
           )}
         </div>
       </div>
-    </AuthenticationContext.Provider>
+    </div>
   );
 };
 

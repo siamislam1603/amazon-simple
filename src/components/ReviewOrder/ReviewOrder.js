@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import productsJson from '../../fakeData/products.json';
 import placeOrderImg from '../../images/giphy.gif';
-import { clearTheCart, deleteFromDb, getStoredCart } from '../../utilities/fakedb';
+import { deleteFromDb, getStoredCart } from '../../utilities/fakedb';
 import Order from '../Order/Order';
 import ReviewItem from '../ReviewItem/ReviewItem';
 const ReviewOrder = () => {
     const [cartItems,setCartItems]=useState([]);
     const [orderPlaced,setOrderPlaced]=useState(false);
+    const navigate=useNavigate();
     useEffect(()=>{
         const getCart=getStoredCart();
         const cartKeys=Object.keys(getCart);
@@ -21,10 +23,8 @@ const ReviewOrder = () => {
         deleteFromDb(cart.key);
         setCartItems(cartItems.filter(pd=>pd.key!==cart.key));
     }
-    const handlePlaceOrder=()=>{
-        setCartItems([]);
-        setOrderPlaced(true);
-        clearTheCart();
+    const handleProceedCheckout=()=>{
+        navigate("/shipment");
     }
     return (
         <div className="container mb-3">
@@ -38,7 +38,7 @@ const ReviewOrder = () => {
                 </div>
                 <div className="col-md-3">
                     <Order items={cartItems}>
-                        {cartItems.length>0 && <button className="btn btn-warning" onClick={handlePlaceOrder}>Place order</button>}
+                        {cartItems.length>0 && <button className="btn btn-warning" onClick={handleProceedCheckout}>Proceed Checkout</button>}
                     </Order>
                 </div>
             </div>
