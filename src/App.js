@@ -8,6 +8,7 @@ import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import Authentication from './components/Authentication/Authentication';
 import Shipment from './components/Shipment/Shipment';
+import ProtectedRoute from './components/ProtectedRoute';
 export const LoginContext=createContext();
 function App() {
   const [user, setUser] = useState({
@@ -23,12 +24,16 @@ function App() {
         <Routes>
             <Route path="/" element={<Shop />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/inventory" element={<Inventory />} />
+            <Route element={<ProtectedRoute/>}>
+              <Route path="/inventory" element={<Inventory />} />
+            </Route>
             <Route path="/review" element={<ReviewOrder />} />
             <Route path="*" element={<NotFound/>}/>
             <Route path="/product/:productId" element={<ProductDetail/>}/>
             <Route path="/login" element={<Authentication/>}/>
-            <Route path="/shipment" element={<Shipment/>}/>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/shipment" element={<Shipment/>}/>
+            </Route>
         </Routes>
       </BrowserRouter>
     </LoginContext.Provider>

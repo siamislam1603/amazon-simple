@@ -11,10 +11,15 @@ import {
 import SignIn from "./SignIn";
 import "./Authentication.css";
 import { LoginContext } from "../../App";
+import { useLocation, useNavigate } from "react-router";
 const app = initializeApp(firebaseConfig);
 const facebookProvider = new FacebookAuthProvider();
 const Authentication = () => {
   const [user, setUser] = useContext(LoginContext);
+  const location=useLocation();
+  const navigate=useNavigate();
+  console.log('Authentication page:',location);
+  let {from}=location.state || {from:{pathname:'/'}};
   const setUserInfo=(userProfile)=>{
     setUser({
       isLoggedIn: true,
@@ -31,6 +36,9 @@ const Authentication = () => {
       const user = result.user;
       console.log(user);
       setUserInfo(user);
+      navigate(from,{
+        replace:true
+      });
     })
     .catch((error) => {
       const errorMessage = error.message;
@@ -43,6 +51,9 @@ const Authentication = () => {
         console.log(result);
         const userProfile = result.user;
         setUserInfo(userProfile);
+        navigate(from,{
+          replace:true
+        });
       })
       .catch((error) => {
         console.log(error);
