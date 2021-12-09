@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "../../firebase.config";
 import {
@@ -14,6 +14,7 @@ import { LoginContext } from "../../App";
 import { useLocation, useNavigate } from "react-router";
 const app = initializeApp(firebaseConfig);
 const facebookProvider = new FacebookAuthProvider();
+
 const Authentication = () => {
   const [user, setUser] = useContext(LoginContext);
   const location=useLocation();
@@ -28,6 +29,11 @@ const Authentication = () => {
       photo: userProfile.photoURL,
     });
   }
+  useEffect(()=>{
+    user.isLoggedIn && navigate(from,{
+      replace:true
+    });
+  },[user.isLoggedIn,navigate,from]);
   const googleProvider = new GoogleAuthProvider();
   const auth = getAuth();
   const handleFacebookSignUpClick=()=>{
@@ -36,9 +42,6 @@ const Authentication = () => {
       const user = result.user;
       console.log(user);
       setUserInfo(user);
-      navigate(from,{
-        replace:true
-      });
     })
     .catch((error) => {
       const errorMessage = error.message;
@@ -51,9 +54,6 @@ const Authentication = () => {
         console.log(result);
         const userProfile = result.user;
         setUserInfo(userProfile);
-        navigate(from,{
-          replace:true
-        });
       })
       .catch((error) => {
         console.log(error);

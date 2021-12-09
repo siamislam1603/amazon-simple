@@ -11,3 +11,6 @@
     background-color:gray ;
     color: white;
 }
+.logout-btn{
+    cursor: pointer;
+}
